@@ -11,13 +11,13 @@ public class PhoneManager {
 	static Scanner sc = new Scanner(System.in);
 	//引入业务
 	static PhoneBizImpl pbiz = new PhoneBizImpl();
-	static ArrayList<Phone> list = new ArrayList<Phone>();
+	static List<Phone> list = new ArrayList<Phone>();
 	public static void main(String[] args) {
 		mainMenu();
 	}
 	private static void mainMenu() {
 		while(true){
-			System.out.println("1.增加    2.删除    3.修改    4.查询    5.打印电话薄    0.退出\n请选择业务");
+			System.out.println("1.增加    2.删除    3.修改    4.查询    5.打印电话薄    6.上传电话薄    0.退出\n请选择业务");
 			int select = sc.nextInt();
 			switch (select) {
 			case 1:
@@ -35,17 +35,36 @@ public class PhoneManager {
 			case 5:
 				write();
 				break;
+			case 6:
+				upload();
+				break;
 			case 0:
 				System.exit(0);
 				break;
 			default:System.out.println("选择有误！");
 				break;
 			}
-		}
-		
+		}		
 	}
+	//上传电话薄
+	private static void upload() {
+		boolean result = false;
+		System.out.println("请输入要上传的文件(例如：D:\\\\phone.txt)");
+		String path = sc.next();
+		list = pbiz.upload(path);
+		for(Phone phone:list){
+			Phone p = new Phone(phone.getName(),phone.getSex(),phone.getphoneno());
+			result = pbiz.addPhone(p);
+		}
+		if(result==true){
+			System.out.println("上传成功");
+		}else{
+			System.out.println("上传失败");
+		}
+	}
+	//下载电话薄
 	private static void write() {
-		ArrayList<Phone> list = pbiz.select();
+		List<Phone> list = pbiz.select();
 		System.out.println("------电话薄全部信息如下------");
 		for(Phone phone:list){
 			System.out.println(phone);
@@ -57,9 +76,7 @@ public class PhoneManager {
 			System.out.println("打印成功");
 		}else{
 			System.out.println("打印失败");
-		}
-		
-		
+		}	
 	}
 	private static void query() {
 		System.out.println("----------查询界面----------");

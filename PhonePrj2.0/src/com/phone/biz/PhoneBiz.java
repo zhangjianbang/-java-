@@ -17,8 +17,10 @@ public interface PhoneBiz {
 	//根据条件查找多个对象
 	public List<Phone> findByConditon(String Conditon);
 	//无条件查询
-	public ArrayList<Phone> select();
-	//打印电话本信息
-	public boolean writePhonetxt(ArrayList<Phone> list,String path);
+	public List<Phone> select();
+	//打印电话薄
+	public boolean writePhonetxt(List<Phone> list,String path);
+	//上传电话薄
+	public List<Phone> upload(String path);
 	
 }
